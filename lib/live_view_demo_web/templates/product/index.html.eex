@@ -1,4 +1,4 @@
-<h1>Listing Products</h1>
+<h2 class="app__main__title">Listing Products</h2>
 
 <table>
   <thead>

@@ -7,8 +7,8 @@ defmodule LiveViewDemo.Orders.LineItem do
   schema "line_items" do
     field :price, :decimal
     field :quantity, :integer
-    field :product_id, :binary_id
-    field :order_id, :binary_id
+    belongs_to :product, LiveViewDemo.Orders.Product
+    belongs_to :order, LiveViewDemo.Orders.Order
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule LiveViewDemo.Orders.LineItem do
   @doc false
   def changeset(line_item, attrs) do
     line_item
-    |> cast(attrs, [:price])
-    |> validate_required([:price])
+    |> cast(attrs, [:price, :quantity])
+    |> validate_required([:price, :quantity])
   end
 end

@@ -4,15 +4,15 @@
 
 /* @tailwind preflight; */
 
-@tailwind base;
+/* @tailwind base;
 
-@tailwind components;
+@tailwind components; */
 
 /* Put your custom components here */
 
 /* cd assets
 npx tailwind init */
 
-@tailwind utilities;
+/* @tailwind utilities; */
 
 /* Put your custom utilities here */

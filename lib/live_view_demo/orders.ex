@@ -7,6 +7,18 @@ defmodule LiveViewDemo.Orders do
   alias LiveViewDemo.Repo
 
   alias LiveViewDemo.Orders.Order
+  alias LiveViewDemo.Orders.Product
+  alias LiveViewDemo.Orders.LineItem
+
+  def add_list_item_to_order(%Order{} = order, product_id) do
+    product = Repo.get!(LiveViewDemo.Orders.Product, product_id)
+    line_item = Ecto.build_assoc(order, :line_items,
+      product_id: product_id,
+      quantity: 1,
+      price: product.price
+    )
+    Repo.insert(line_item)
+  end
 
   @doc """
   Returns the list of orders.
@@ -36,6 +48,10 @@ defmodule LiveViewDemo.Orders do
 
   """
   def get_order!(id), do: Repo.get!(Order, id)
+
+  def get_order_with_line_items_and_products!(id) do
+    Repo.get!(Order, id) |> Repo.preload([line_items: :product])
+  end
 
   @doc """
   Creates a order.
@@ -101,8 +117,6 @@ defmodule LiveViewDemo.Orders do
   def change_order(%Order{} = order) do
     Order.changeset(order, %{})
   end
-
-  alias LiveViewDemo.Orders.Product
 
   @doc """
   Returns the list of products.
@@ -196,5 +210,25 @@ defmodule LiveViewDemo.Orders do
   """
   def change_product(%Product{} = product) do
     Product.changeset(product, %{})
+  end
+
+  def increment_line_item_quantity(line_item_id) do
+    update = from li in LineItem,
+      update: [inc: [quantity: 1]],
+      where: li.id == ^line_item_id
+
+    Repo.update_all(update, [])
+  end
+
+  def decrement_line_item_quantity(line_item_id) do
+    line_item = Repo.get!(LineItem, line_item_id)
+
+    if line_item.quantity == 1 do
+      Repo.delete!(line_item)
+    else
+      line_item
+      |> LineItem.changeset(%{quantity: line_item.quantity - 1})
+      |> Repo.update!()
+    end
   end
 end
