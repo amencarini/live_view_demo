@@ -17,7 +17,15 @@ defmodule LiveViewDemoWeb.Router do
   scope "/", LiveViewDemoWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", HomeController, :index
+
+    resources "/products", ProductController
+
+    live "/tables", TableLive
+    live "/orders", Order.IndexLive
+    live "/orders/new", Order.NewLive
+    live "/orders/:order_id", Order.ShowLive
+
     live "/clock", ClockLive
   end
 

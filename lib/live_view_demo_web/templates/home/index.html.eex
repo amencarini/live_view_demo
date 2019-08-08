@@ -1,0 +1,8 @@
+<ul>
+  <li>
+    <%= link "Tables", to: Routes.live_path(@conn, LiveViewDemoWeb.TableLive) %>
+  </li>
+  <li>
+    <%= link "Orders", to: Routes.live_path(@conn, LiveViewDemoWeb.Order.IndexLive) %>
+  </li>
+</ul>

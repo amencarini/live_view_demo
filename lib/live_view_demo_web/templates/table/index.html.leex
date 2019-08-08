@@ -1,0 +1,38 @@
+<%= for table <- @tables do %>
+  <div>
+    <%= live_link "Table #{table.number} – #{table.status}", to:
+      Routes.live_path(@socket, LiveViewDemoWeb.TableLive, table_number: table.number)
+    %>
+  </div>
+<% end %>
+
+<%= if @selected_table do %>
+  <h2>Table <%= @selected_table.number %></h2>
+
+  <div>
+    Selected table is <%= @selected_table.status %>
+  </div>
+
+  <%= if @selected_table.status == :free do %>
+    <button phx-click="occupy-table" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Start a new order
+    </button>
+  <% else %>
+    <div phx-click="free-table">
+      - Free table -
+    </div>
+  <% end %>
+
+  <div>
+    Total for the table: <%= @selected_table.bill %>
+  </div>
+<% end %>
+
+<h2>todo:</h2>
+<ul>
+  <li>Find the active order for the selected table</li>
+  <li>Show an unoccupied table</li>
+  <li>Open an order for the table</li>
+  <li>Show contents of the order</li>
+  <li>Close the order</li>
+</ul>

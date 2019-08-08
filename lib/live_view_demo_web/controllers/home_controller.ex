@@ -1,4 +1,4 @@
-defmodule LiveViewDemoWeb.PageController do
+defmodule LiveViewDemoWeb.HomeController do
   use LiveViewDemoWeb, :controller
 
   def index(conn, _params) do
